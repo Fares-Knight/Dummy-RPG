@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#111612" />
+    <meta name="description" content="Lisière, un RPG narratif procédural. Entrez dans les bois, faites vos choix et écrivez votre légende." />
+    <title>Lisière — Votre histoire prend racine</title>
+    <link rel="icon" href="/assets/emblem.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles.css" />
+    <script type="module" src="/src/app.js"></script>
+  </head>
+  <body>
+    <div class="ambient-background" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Lisière, accueil"><img src="/assets/emblem.svg" alt="" /><span>LISIÈRE<small>VOTRE HISTOIRE PREND RACINE</small></span></a>
+      <nav class="main-nav" aria-label="Navigation principale">
+        <button class="nav-button active" data-view="adventure" aria-label="L’aventure"><span data-icon="compass"></span><span>L’aventure</span></button>
+        <button class="nav-button" data-view="journal" aria-label="Journal"><span data-icon="book"></span><span>Journal</span><span id="journal-count" class="nav-count" hidden>0</span></button>
+        <button class="nav-button" data-view="map" aria-label="Cartographie"><span data-icon="map"></span><span>Cartographie</span></button>
+      </nav>
+      <div class="header-actions"><button id="sound-button" class="icon-button" aria-label="Activer l’ambiance sonore" aria-pressed="false" title="Ambiance sonore"><span data-icon="volume-off"></span></button><span class="header-divider"></span><button id="help-button" class="icon-button" aria-label="Comment jouer" title="Comment jouer"><span data-icon="help"></span></button></div>
+    </header>
+
+    <main class="app-shell">
+      <div class="page-heading"><div><div class="eyebrow">LES CHRONIQUES D’ELDERWYN</div><h1>Chaque choix laisse une trace.</h1></div><button id="narrator-info" class="narrator-status"><span class="status-dot"></span><span id="narrator-label">Connexion au narrateur</span><span class="demo-tag">IA</span></button></div>
+      <div class="game-layout">
+        <aside class="sidebar" aria-label="Votre personnage">
+          <section class="character-panel panel">
+            <div class="section-label">VOTRE PERSONNAGE <span class="tiny-diamond">✧</span></div>
+            <div class="portrait-wrap"><img class="portrait" src="/assets/ranger.svg" alt="Silhouette d’un rôdeur encapuchonné dans la forêt" /><span id="level-badge" class="level-badge" title="Numéro de quête">1</span></div>
+            <h2>Aëlin</h2><p class="character-class">Rôdeur des terres oubliées</p>
+            <div class="character-divider"><span>✦</span></div>
+            <div class="stat-label"><span><span data-icon="heart"></span>Vitalité</span><span><strong id="hp-value">20</strong><span class="stat-max"> / 20</span></span></div>
+            <div id="hp-meter" class="stat-track health" role="progressbar" aria-label="Vitalité" aria-valuemin="0" aria-valuemax="20" aria-valuenow="20"><div id="hp-bar"></div></div>
+            <div class="stat-label"><span><span data-icon="sparkles"></span>Instinct</span><span><strong id="focus-value">10</strong><span class="stat-max"> / 10</span></span></div>
+            <div id="focus-meter" class="stat-track focus" role="progressbar" aria-label="Instinct" aria-valuemin="0" aria-valuemax="10" aria-valuenow="10"><div id="focus-bar"></div></div>
+            <div class="gold-row"><span><span data-icon="coins"></span>Pièces d’or</span><strong id="gold-value">12</strong></div>
+          </section>
+
+          <section class="quest-panel panel"><div class="section-label"><span data-icon="flag"></span>QUÊTE EN COURS</div><h3 id="quest-title">Votre quête prend forme</h3><p id="quest-description">Le narrateur invente votre aventure.</p><div class="quest-progress"><span id="quest-dots" class="quest-dots"></span><span id="quest-count">0 / 5</span></div></section>
+
+          <section class="inventory-panel panel"><div class="section-label">DANS VOTRE BESACE <span data-icon="bag"></span></div><div id="inventory"></div><p class="inventory-hint">Les petits riens font les grandes aventures.</p></section>
+          <button id="restart-button" class="restart-button"><span data-icon="restart"></span>Nouvelle aventure</button>
+        </aside>
+
+        <section id="adventure-view" class="content-view" aria-label="L’aventure">
+          <article class="story-panel panel">
+            <div id="scene-art" class="scene-art" data-region="forest">
+              <img src="/assets/forest.svg" alt="Un sentier lumineux traverse une forêt ancienne vers un sanctuaire dans la brume" />
+              <div class="scene-topline"><span class="location-label"><span data-icon="pin"></span><span id="location">FORÊT D’ÉTHER</span></span><span class="day-label"><span data-icon="moon"></span><span id="day">NUIT · JOUR 01</span></span></div>
+              <div class="fireflies" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <div class="scene-title"><div class="chapter-label"><span></span><span id="chapter">CHAPITRE I · LE PREMIER PAS</span></div><h2 id="scene-title">Une histoire encore à écrire</h2></div>
+              <span class="art-corner" aria-hidden="true">✧</span>
+            </div>
+            <div class="story-body">
+              <div id="consequence" class="consequence" hidden aria-live="polite"></div>
+              <div id="narrative" class="narrative" aria-live="polite"></div>
+              <div id="generation-status" class="generation-status" role="status" hidden></div>
+              <div class="choice-heading"><span class="choice-heading-line"></span><span data-icon="diamond"></span><span id="choice-prompt">QU’ALLEZ-VOUS FAIRE ?</span><span class="choice-heading-line"></span></div>
+              <div id="choices" class="choices"></div>
+              <div class="story-footer"><span><span data-icon="feather"></span><span id="story-footer-text">L’histoire se souvient de vos choix.</span></span><span class="keyboard-hint">Choisir avec <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd></span></div>
+            </div>
+          </article>
+          <div class="below-story"><span id="save-status"><span class="save-dot"></span>Votre progression est sauvegardée</span><span>Une aventure. Mille chemins.</span></div>
+        </section>
+
+        <section id="journal-view" class="content-view secondary-panel panel" aria-labelledby="journal-title" hidden><div class="view-heading"><span class="eyebrow">LES PAGES DE VOTRE VOYAGE</span><h2 id="journal-title">Le journal d’Aëlin</h2><p>Les chemins empruntés. Les rencontres. Ce qu’il en reste.</p></div><div id="journal-entries" class="journal-entries"></div><button class="secondary-button return-button" data-return>Reprendre l’aventure <span data-icon="arrow"></span></button></section>
+
+        <section id="map-view" class="content-view secondary-panel panel" aria-labelledby="map-title" hidden><div class="view-heading"><span class="eyebrow">AU-DELÀ DES SENTIERS CONNUS</span><h2 id="map-title">Les terres d’Elderwyn</h2><p>La carte se dessine au fil de vos pas.</p></div><div id="journey-map" class="journey-map"></div><div class="map-legend"><span><i class="visited-dot"></i>Exploré</span><span><i class="current-dot"></i>Votre position</span><span><i class="unknown-dot"></i>À découvrir</span></div><button class="secondary-button return-button" data-return>Reprendre l’aventure <span data-icon="arrow"></span></button></section>
+      </div>
+      <footer class="site-footer"><span class="footer-brand">LISIÈRE</span><span>Le voyage compte autant que la destination.</span><span>POC IA · V.02</span></footer>
+    </main>
+    <dialog id="modal"><button id="modal-close" class="icon-button modal-close" aria-label="Fermer"><span data-icon="close"></span></button><div id="modal-content"></div></dialog>
+    <div id="toast" class="toast" role="status" hidden></div>
+    <noscript><div class="noscript">Activez JavaScript pour commencer votre aventure.</div></noscript>
+  </body>
+</html>

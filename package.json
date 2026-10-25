@@ -1,0 +1,17 @@
+{
+  "name": "lisiere",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Un RPG dont chaque situation est générée en direct par Codex.",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node server.mjs",
+    "check": "node scripts/check.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "test:live": "node scripts/live-narrator.mjs"
+  },
+  "license": "MIT",
+  "repository": { "type": "git", "url": "https://github.com/Fares-Knight/Dummy-RPG.git" },
+  "engines": { "node": ">=22" }
+}
